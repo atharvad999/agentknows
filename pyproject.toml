@@ -1,0 +1,45 @@
+[project]
+name = "reachkit"
+version = "0.1.0"
+description = "Typed Python SDK + MCP server wrapping Agent-Reach: one facade to read/search 15 internet platforms."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [{ name = "Atharva Deshpande" }]
+keywords = ["ai-agent", "mcp", "agent-reach", "web-reader", "search", "sdk"]
+
+dependencies = [
+    "agent-reach @ git+https://github.com/Panniantong/Agent-Reach",
+    "mcp[cli]>=1.2,<2",
+    "requests>=2.28",
+    "yfinance>=0.2.50",
+]
+
+[project.optional-dependencies]
+research = ["anthropic>=0.60"]
+dev = ["pytest>=8.0", "ruff>=0.8"]
+
+[project.scripts]
+reachkit = "reachkit.cli:main"
+reachkit-mcp = "reachkit.mcp_server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/reachkit"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
