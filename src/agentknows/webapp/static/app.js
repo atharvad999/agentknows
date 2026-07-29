@@ -329,6 +329,10 @@
   (async () => {
     try {
       const data = await (await fetch("/api/platforms")).json();
+      if (data.hosted) {
+        document.querySelector(".footer span").textContent =
+          "agentknows · hosted demo — login-gated channels need the local install";
+      }
       const plats = data.platforms || {};
       searchPlatforms = Object.keys(plats).filter((p) => plats[p].search);
       const readable = Object.keys(plats).filter((p) => plats[p].read);

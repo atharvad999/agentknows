@@ -37,8 +37,11 @@ def create_app():
             fix='uv pip install "agentknows[ui]"',
         ) from exc
 
+    import os
+
     app = FastAPI(title="agentknows console")
     reach = Reach()
+    hosted = os.environ.get("AGENTKNOWS_HOSTED") == "1"
 
     @app.get("/")
     def index():
@@ -54,7 +57,7 @@ def create_app():
 
     @app.get("/api/platforms")
     def platforms():
-        return {"ok": True, "platforms": reach.platforms()}
+        return {"ok": True, "hosted": hosted, "platforms": reach.platforms()}
 
     @app.get("/api/doctor")
     def doctor():

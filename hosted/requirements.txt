@@ -1,0 +1,1 @@
+agentknows[ui] @ git+https://github.com/atharvad999/agentknows
