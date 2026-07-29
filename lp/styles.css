@@ -380,6 +380,27 @@ pre::-webkit-scrollbar-track { background: transparent; }
 
 .block + .lede { margin-top: 1.5rem; }
 
+/* ---------- console ---------- */
+
+.console-shot {
+  margin: 0;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--ground-2);
+}
+
+.console-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.console-cmd {
+  max-width: 26rem;
+  margin-top: 1.5rem;
+}
+
 /* ---------- coverage ---------- */
 
 .coverage {
