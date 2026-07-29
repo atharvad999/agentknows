@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bharatnet console</title>
+<meta name="description" content="Local console for bharatnet — read, search, hot and research across Indian and Western platforms.">
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+
+<header class="nav">
+  <a class="nav__mark" href="/">bharatnet <span class="nav__mark-dim">/ console</span></a>
+  <nav class="nav__links">
+    <button class="nav__doctor" id="doctor-btn" type="button" title="Channel health">doctor</button>
+    <a class="nav__cta" href="https://github.com/atharvad999/bharatnet" target="_blank" rel="noopener">GitHub</a>
+  </nav>
+</header>
+
+<main class="console">
+
+  <section class="prompt">
+    <p class="eyebrow">One call, every source</p>
+
+    <div class="verbs" role="tablist" aria-label="Verb">
+      <button class="verb is-active" data-verb="research" role="tab">research</button>
+      <button class="verb" data-verb="search" role="tab">search</button>
+      <button class="verb" data-verb="read" role="tab">read</button>
+      <button class="verb" data-verb="hot" role="tab">hot</button>
+    </div>
+
+    <form id="query-form" class="query" autocomplete="off">
+      <input id="query-input" class="query__input" type="text"
+             placeholder="Ask the internet — e.g. UPI transaction limit changes"
+             spellcheck="false" autofocus>
+      <button class="btn btn--primary query__go" type="submit">Run</button>
+    </form>
+
+    <div class="controls">
+      <div class="control" data-for="research hot">
+        <span class="control__label">region</span>
+        <div class="seg" id="region-seg">
+          <button type="button" data-value="" class="is-active">both</button>
+          <button type="button" data-value="india">india</button>
+          <button type="button" data-value="western">western</button>
+        </div>
+      </div>
+      <div class="control" data-for="search hot">
+        <span class="control__label">platform</span>
+        <select id="platform-select" class="control__select"></select>
+      </div>
+      <div class="control" data-for="read">
+        <span class="control__label">platform</span>
+        <select id="read-platform-select" class="control__select">
+          <option value="">auto (from URL)</option>
+        </select>
+      </div>
+      <div class="control" data-for="research search hot">
+        <span class="control__label">limit</span>
+        <div class="seg" id="limit-seg">
+          <button type="button" data-value="5">5</button>
+          <button type="button" data-value="8" class="is-active">8</button>
+          <button type="button" data-value="15">15</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sources" id="sources" hidden>
+    <p class="sources__label eyebrow">fan-out</p>
+    <ul class="chips" id="source-chips"></ul>
+  </section>
+
+  <section class="results" id="results" hidden>
+    <div class="results__head">
+      <span class="results__meta" id="results-meta"></span>
+      <button class="results__copy" id="copy-btn" type="button" hidden>copy markdown</button>
+    </div>
+    <div id="results-body"></div>
+  </section>
+
+  <section class="empty" id="empty">
+    <p>Pick a verb, type a query, run.<br>
+    <span class="empty__dim">research fans out across every channel that can answer · read takes a URL or ticker · hot needs no query</span></p>
+  </section>
+
+</main>
+
+<dialog id="doctor-dialog" class="doctor">
+  <div class="doctor__head">
+    <p class="eyebrow">Channel health</p>
+    <button id="doctor-close" class="doctor__close" type="button">close</button>
+  </div>
+  <div id="doctor-body"><p class="empty__dim">probing…</p></div>
+</dialog>
+
+<footer class="footer">
+  <span>bharatnet · local console</span>
+  <span id="foot-status">idle</span>
+</footer>
+
+<script src="/app.js"></script>
+</body>
+</html>

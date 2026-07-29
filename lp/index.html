@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bharatnet — one call, every source</title>
+<meta name="description" content="A typed Python SDK and MCP server for internet access across Western and Indian platforms. One facade, one result shape, machine-readable failures.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="nav">
+  <a class="nav__mark" href="#top">bharatnet</a>
+  <nav class="nav__links">
+    <a href="#what">What it does</a>
+    <a href="#coverage">Coverage</a>
+    <a href="#install">Install</a>
+    <a class="nav__cta" href="https://github.com/atharvad999/bharatnet">GitHub</a>
+  </nav>
+</header>
+
+<section class="hero" id="top">
+  <canvas id="dither" class="hero__canvas" aria-hidden="true"></canvas>
+  <div class="hero__scrim" aria-hidden="true"></div>
+
+  <div class="hero__inner">
+    <p class="eyebrow">Python SDK &amp; MCP server</p>
+    <h1 class="hero__title">
+      The internet is scattered.<br>
+      Agents should read it <em>in one shape</em>.
+    </h1>
+    <p class="hero__sub">
+      One typed facade over fifteen platforms — web, YouTube, GitHub, Hacker News,
+      Reddit, RSS, Discourse forums, NSE&nbsp;/&nbsp;BSE and US equities, Indian and
+      Western news. Every call returns the same <code>ReachResult</code>. Every
+      failure carries a runnable fix.
+    </p>
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="#install">Get started</a>
+      <a class="btn btn--ghost" href="#what">See how it works</a>
+    </div>
+    <pre class="hero__code"><code><span class="c-k">from</span> bharatnet <span class="c-k">import</span> Reach
+
+reach = Reach()
+reach.read(<span class="c-s">"https://news.ycombinator.com/item?id=39000000"</span>)
+reach.read(<span class="c-s">"RELIANCE"</span>, platform=<span class="c-s">"stocks"</span>)
+reach.research(<span class="c-s">"UPI transaction limits"</span>, region=<span class="c-s">"india"</span>)</code></pre>
+  </div>
+
+  <div class="hero__foot">
+    <span>Fifteen platforms · one result shape</span>
+    <span class="hero__hint">Scroll</span>
+  </div>
+</section>
+
+<section class="strip">
+  <p>
+    Fifteen platforms, each with its own CLI, auth story and output format. bharatnet
+    health-checks them, routes every request to the backend that currently works —
+    Jina Reader, yt-dlp, <code>gh</code>, Exa, twitter-cli — and normalises what comes
+    back into one envelope. Six channels need no configuration at all; the rest tell
+    you the command that fixes them.
+  </p>
+</section>
+
+<section class="section" id="what">
+  <div class="section__head">
+    <h2>Four verbs</h2>
+    <p>Read a thing. Search a platform. See what's hot. Fan out across all of it.</p>
+  </div>
+
+  <div class="cards">
+    <article class="card">
+      <h3><span class="card__n">01</span> read</h3>
+      <p>Point it at a URL and get content back. Routing is inferred from the host — YouTube gets metadata plus transcript, GitHub issues go through <code>gh</code>, HN returns the comment tree, anything else falls back to Markdown via Jina Reader.</p>
+      <pre><code>reach.read(<span class="c-s">"https://youtube.com/watch?v=…"</span>)
+reach.read(<span class="c-s">"https://forum.valuepickr.com/t/…"</span>)
+reach.read(<span class="c-s">"https://any-blog.com/post"</span>)</code></pre>
+    </article>
+
+    <article class="card">
+      <h3><span class="card__n">02</span> search</h3>
+      <p>Semantic web search through Exa by default, or target a platform directly — GitHub code search, Discourse forums, equity symbol lookup across NSE, BSE and US listings.</p>
+      <pre><code>reach.search(<span class="c-s">"llm eval frameworks"</span>)
+reach.search(<span class="c-s">"react hooks"</span>, platform=<span class="c-s">"github"</span>, kind=<span class="c-s">"code"</span>)
+reach.search(<span class="c-s">"smallcap IT"</span>, platform=<span class="c-s">"discourse"</span>)</code></pre>
+    </article>
+
+    <article class="card">
+      <h3><span class="card__n">03</span> hot</h3>
+      <p>Front pages and trending lists, region-aware. The Indian news pack pulls ET, Mint, The Hindu, TOI and Moneycontrol; Discourse returns top threads by period.</p>
+      <pre><code>reach.hot(<span class="c-s">"hackernews"</span>)
+reach.hot(<span class="c-s">"news"</span>, region=<span class="c-s">"india"</span>)
+reach.hot(<span class="c-s">"discourse"</span>, period=<span class="c-s">"weekly"</span>)</code></pre>
+    </article>
+
+    <article class="card">
+      <h3><span class="card__n">04</span> research</h3>
+      <p>One query, parallel fan-out across every channel that can answer it, merged into a single bundle. Ask for a report and Claude writes the synthesis on top.</p>
+      <pre><code>reach.research(<span class="c-s">"vector db pricing"</span>, report=<span class="c-k">True</span>)</code></pre>
+    </article>
+  </div>
+</section>
+
+<section class="section section--split" id="shape">
+  <div>
+    <h2>One result shape</h2>
+    <p class="lede">
+      Per-platform CLIs each have their own output format. bharatnet normalises all of
+      them into one dataclass, so downstream code never branches on where the content
+      came from.
+    </p>
+    <pre class="block"><code>ReachResult(
+    ok=<span class="c-k">True</span>,
+    platform=<span class="c-s">"stocks"</span>,
+    backend=<span class="c-s">"yfinance"</span>,
+    kind=<span class="c-s">"document"</span>,
+    content=<span class="c-s">"# Reliance Industries…"</span>,
+    meta={<span class="c-s">"price"</span>: 1275.9, <span class="c-s">"currency"</span>: <span class="c-s">"INR"</span>, …},
+)</code></pre>
+  </div>
+  <div>
+    <h2>Failures you can act on</h2>
+    <p class="lede">
+      Missing tools do not raise opaque errors. Every <code>ReachError</code> subclass
+      carries a <code>.fix</code> — a runnable prescription — and where a fallback
+      exists, bharatnet degrades to it instead of failing.
+    </p>
+    <pre class="block"><code><span class="c-k">try</span>:
+    reach.search(<span class="c-s">"react hooks"</span>, platform=<span class="c-s">"github"</span>)
+<span class="c-k">except</span> SetupRequired <span class="c-k">as</span> e:
+    <span class="c-c">#  brew install gh && gh auth login</span>
+    print(e.fix)</code></pre>
+    <p class="lede">
+      <code>bharatnet doctor</code> returns the same information as a structured health
+      report across every channel at once.
+    </p>
+  </div>
+</section>
+
+<section class="section" id="coverage">
+  <div class="section__head">
+    <h2>Coverage</h2>
+    <p>Fifteen platforms, six of them zero-config. The rest tell you exactly what to install.</p>
+  </div>
+  <div class="coverage">
+    <div class="coverage__col">
+      <h3>Western</h3>
+      <ul class="chips">
+        <li>Web &amp; articles</li><li>Exa search</li><li>YouTube</li>
+        <li>GitHub code &amp; issues</li><li>Hacker News</li><li>Reddit</li>
+        <li>Twitter / X</li><li>RSS</li><li>US equities</li><li>Western news</li>
+      </ul>
+    </div>
+    <div class="coverage__col">
+      <h3>Indian</h3>
+      <ul class="chips">
+        <li>NSE quotes</li><li>BSE quotes</li><li>Symbol lookup</li>
+        <li>ValuePickr</li><li>Discourse forums</li>
+        <li>Economic Times</li><li>Mint</li><li>The Hindu</li>
+        <li>Times of India</li><li>Moneycontrol</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="install">
+  <div class="section__head">
+    <h2>Install</h2>
+    <p>Two commands to the SDK. One line of JSON to the MCP server.</p>
+  </div>
+  <div class="install">
+    <div>
+      <h3>SDK &amp; CLI</h3>
+      <pre class="block"><code>uv venv &amp;&amp; uv pip install -e .
+bharatnet doctor</code></pre>
+      <p class="note">
+        <code>doctor</code> reports which upstream tools are missing and how to fix each
+        one. Optional: <code>gh</code>, <code>mcporter</code> + <code>exa</code>,
+        <code>twitter-cli</code>, OpenCLI.
+      </p>
+    </div>
+    <div>
+      <h3>MCP server</h3>
+      <pre class="block"><code>{
+  <span class="c-s">"mcpServers"</span>: {
+    <span class="c-s">"bharatnet"</span>: {
+      <span class="c-s">"command"</span>: <span class="c-s">"bharatnet-mcp"</span>
+    }
+  }
+}</code></pre>
+      <p class="note">
+        Works in Claude Desktop, Claude Code, Cursor or any MCP client. No shell access
+        required on the agent side.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>bharatnet</span>
+  <span><a href="https://github.com/atharvad999/bharatnet">github.com/atharvad999/bharatnet</a></span>
+</footer>
+
+<script src="dither.js" defer></script>
+</body>
+</html>

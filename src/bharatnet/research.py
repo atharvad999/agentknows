@@ -40,16 +40,16 @@ def _expand_query(query: str, source: str, region: str | None) -> str:
     return query
 
 
-def gather(
+def gather_iter(
     reach: Any,
     query: str,
     *,
     region: str | None = None,
     limit: int = 8,
-) -> dict[str, dict[str, Any]]:
-    """Fan out the query across sources in parallel. Never raises for a single
-    source — each entry carries ok/items/error/fix so the bundle shows exactly
-    what was and wasn't covered."""
+):
+    """Fan out the query across sources in parallel, yielding (source, entry)
+    as each completes. Never raises for a single source — each entry carries
+    ok/items/error/fix so callers see exactly what was and wasn't covered."""
     registry = reach._registry
     news_kwargs = {"region": region} if region in ("india", "western") else {}
 
@@ -63,18 +63,26 @@ def gather(
         elif source in registry:
             runners[source] = lambda q=q, s=source: registry[s].search(q, limit=limit)
 
-    bundle: dict[str, dict[str, Any]] = {}
     with ThreadPoolExecutor(max_workers=len(runners)) as pool:
         futures = {pool.submit(fn): name for name, fn in runners.items()}
         for fut in as_completed(futures):
             name = futures[fut]
             try:
-                result = fut.result()
-                bundle[name] = {"ok": True, "result": result}
+                yield name, {"ok": True, "result": fut.result()}
             except ReachError as exc:
-                bundle[name] = {"ok": False, "error": str(exc), "fix": exc.fix}
+                yield name, {"ok": False, "error": str(exc), "fix": exc.fix}
             except Exception as exc:
-                bundle[name] = {"ok": False, "error": f"{type(exc).__name__}: {exc}"}
+                yield name, {"ok": False, "error": f"{type(exc).__name__}: {exc}"}
+
+
+def gather(
+    reach: Any,
+    query: str,
+    *,
+    region: str | None = None,
+    limit: int = 8,
+) -> dict[str, dict[str, Any]]:
+    bundle = dict(gather_iter(reach, query, region=region, limit=limit))
     # Keep deterministic source order for the reader.
     return {k: bundle[k] for k in _SOURCE_ORDER if k in bundle}
 

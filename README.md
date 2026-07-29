@@ -90,6 +90,19 @@ into one Markdown bundle with per-source coverage notes. `--report` adds a
 Claude-written synthesis (install `bharatnet[research]`, set `ANTHROPIC_API_KEY`
 or `ant auth login`; refusal fallbacks are enabled by default).
 
+## Web console
+
+```bash
+uv pip install "bharatnet[ui]"
+bharatnet ui          # opens http://127.0.0.1:8787
+```
+
+A local one-page console over the same engine: pick a verb (research / search /
+read / hot), type a query, watch the research fan-out complete source-by-source
+live (SSE), and read the rendered bundle. `doctor` lives in the nav. Local-first
+on purpose — the strongest backends (yt-dlp, gh, cookies, OpenCLI) are on your
+machine, so the console runs next to them.
+
 ## MCP server
 
 ```bash

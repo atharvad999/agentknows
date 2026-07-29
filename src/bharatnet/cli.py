@@ -94,12 +94,22 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("platforms", help="List platforms and capabilities", parents=[common])
     sub.add_parser("serve", help="Run the MCP server (stdio)", parents=[common])
 
+    p_ui = sub.add_parser("ui", help="Launch the local web console", parents=[common])
+    p_ui.add_argument("--port", type=int, default=8787)
+    p_ui.add_argument("--no-open", action="store_true", help="Don't open the browser")
+
     args = parser.parse_args(argv)
 
     if args.command == "serve":
         from .mcp_server import main as serve_main
 
         serve_main()
+        return 0
+
+    if args.command == "ui":
+        from .webapp import main as ui_main
+
+        ui_main(port=args.port, open_browser=not args.no_open)
         return 0
 
     try:

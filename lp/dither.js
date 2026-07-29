@@ -10,13 +10,18 @@ const FRAME_SRC = (i) => `frames/${String(i + 1).padStart(3, '0')}.webp`;
 
 const CFG = {
   fps: 11,
-  spacing: 0.36, // fraction of each cell left as gap
-  dotScale: 0.86, // dot radius as fraction of the remaining cell
+  pixelSize: 0, // 0 = pick from viewport width in resize()
+  zoom: 1.7,
+  focusX: 0.78, // crop past the bright wall so it is not behind the headline
+  focusY: 0.5,
+  spacing: 0.3, // fraction of each cell left as gap
+  dotScale: 0.97, // dot radius as fraction of the remaining cell
   levels: 5,
-  contrast: 27,
-  brightness: -3,
+  gamma: 1, // <1 lifts shadows, >1 deepens them; tuning knob for other sources
+  contrast: 38,
+  brightness: 8,
   invert: false, // source is light pages on a dark ground, so dots land on the pages
-  floor: 0.035, // tones below this go to zero, killing background haze
+  floor: 0.02, // tones below this go to zero, killing background haze
   colorMix: 0.3, // weight of the sampled source colour vs. the scheme ink
   ink: [232, 220, 195],
   fadeFrames: 9, // length of the wrap crossfade
@@ -48,6 +53,16 @@ function bayer(n) {
 const BAYER = bayer(8);
 const BAYER_N = 64;
 
+/* Any numeric CFG key can be overridden from the query string while tuning,
+ * e.g. ?gamma=0.7&pixelSize=11&invert=1 */
+const QS = new URLSearchParams(location.search);
+if (QS.get('bare') === '1') document.documentElement.classList.add('is-bare');
+for (const [k, v] of QS) {
+  if (!(k in CFG)) continue;
+  if (typeof CFG[k] === 'boolean') CFG[k] = v === '1' || v === 'true';
+  else if (typeof CFG[k] === 'number' && v !== '' && !Number.isNaN(Number(v))) CFG[k] = Number(v);
+}
+
 const smoothstep = (t) => t * t * (3 - 2 * t);
 const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
@@ -64,19 +79,22 @@ function loadFrames() {
 }
 
 /* Cover-fit source rect: which part of the frame to sample so it fills the
- * target aspect without distortion. */
+ * target aspect without distortion. zoom > 1 crops in; focus picks which part of
+ * the frame survives the crop, so the busiest area can be kept clear of the type. */
 function coverRect(sw, sh, tw, th) {
-  const scale = Math.max(tw / sw, th / sh);
-  const w = tw / scale;
-  const h = th / scale;
-  return [(sw - w) / 2, (sh - h) / 2, w, h];
+  const scale = Math.max(tw / sw, th / sh) * CFG.zoom;
+  const w = Math.min(sw, tw / scale);
+  const h = Math.min(sh, th / scale);
+  return [(sw - w) * CFG.focusX, (sh - h) * CFG.focusY, w, h];
 }
 
 /* Auto-levels computed once, off a fixed small render, then pinned for the whole
  * sequence. Recomputing per frame makes the dot density pulse. */
 function pinLevels(frames) {
+  // Sample the same crop the renderer will show, or the percentiles come from
+  // pixels that get cropped away and the whole field renders too dark.
   const W = 192;
-  const H = Math.round((W * frames[0].naturalHeight) / frames[0].naturalWidth);
+  const H = 108;
   const c = document.createElement('canvas');
   c.width = W;
   c.height = H;
@@ -87,7 +105,8 @@ function pinLevels(frames) {
   const sampleAt = [0, 0.25, 0.5, 0.75, 0.95];
   for (const t of sampleAt) {
     const f = frames[Math.min(frames.length - 1, Math.round(t * (frames.length - 1)))];
-    ctx.drawImage(f, 0, 0, W, H);
+    const [sx, sy, sw, sh] = coverRect(f.naturalWidth, f.naturalHeight, W, H);
+    ctx.drawImage(f, sx, sy, sw, sh, 0, 0, W, H);
     const d = ctx.getImageData(0, 0, W, H).data;
     for (let i = 0; i < d.length; i += 4) {
       const l = 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
@@ -139,7 +158,7 @@ function start(frames) {
     if (!w || !h) return;
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     // Finer grid on narrow viewports, or the subject stops reading as itself.
-    pixelSize = w < 640 ? 5 : w < 1100 ? 7 : 9;
+    pixelSize = CFG.pixelSize || (w < 640 ? 5 : w < 1100 ? 7 : 8);
     canvas.width = Math.round(w * dpr);
     canvas.height = Math.round(h * dpr);
     cell = pixelSize * dpr;
@@ -206,6 +225,7 @@ function start(frames) {
 
         let v = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
         v = clamp01((v - levels.lo) / levels.span);
+        if (CFG.gamma !== 1) v = Math.pow(v, CFG.gamma);
         v = (v - 0.5) * contrastFactor + 0.5 + brightness;
         if (CFG.invert) v = 1 - v;
         v = clamp01(v);
