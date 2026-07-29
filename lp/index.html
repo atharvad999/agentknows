@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>bharatnet — one call, every source</title>
+<title>agentknows — one call, every source</title>
 <meta name="description" content="A typed Python SDK and MCP server for internet access across Western and Indian platforms. One facade, one result shape, machine-readable failures.">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <header class="nav">
-  <a class="nav__mark" href="#top">bharatnet</a>
+  <a class="nav__mark" href="#top">agentknows</a>
   <nav class="nav__links">
     <a href="#what">What it does</a>
     <a href="#console">Console</a>
     <a href="#coverage">Coverage</a>
     <a href="#install">Install</a>
-    <a class="nav__cta" href="https://github.com/atharvad999/bharatnet">GitHub</a>
+    <a class="nav__cta" href="https://github.com/atharvad999/agentknows">GitHub</a>
   </nav>
 </header>
 
@@ -40,7 +40,7 @@
       <a class="btn btn--primary" href="#install">Get started</a>
       <a class="btn btn--ghost" href="#what">See how it works</a>
     </div>
-    <pre class="hero__code"><code><span class="c-k">from</span> bharatnet <span class="c-k">import</span> Reach
+    <pre class="hero__code"><code><span class="c-k">from</span> agentknows <span class="c-k">import</span> Reach
 
 reach = Reach()
 reach.read(<span class="c-s">"https://news.ycombinator.com/item?id=39000000"</span>)
@@ -56,7 +56,7 @@ reach.research(<span class="c-s">"UPI transaction limits"</span>, region=<span c
 
 <section class="strip">
   <p>
-    Fifteen platforms, each with its own CLI, auth story and output format. bharatnet
+    Fifteen platforms, each with its own CLI, auth story and output format. agentknows
     health-checks them, routes every request to the backend that currently works —
     Jina Reader, yt-dlp, <code>gh</code>, Exa, twitter-cli — and normalises what comes
     back into one envelope. Six channels need no configuration at all; the rest tell
@@ -107,7 +107,7 @@ reach.hot(<span class="c-s">"discourse"</span>, period=<span class="c-s">"weekly
   <div>
     <h2>One result shape</h2>
     <p class="lede">
-      Per-platform CLIs each have their own output format. bharatnet normalises all of
+      Per-platform CLIs each have their own output format. agentknows normalises all of
       them into one dataclass, so downstream code never branches on where the content
       came from.
     </p>
@@ -125,7 +125,7 @@ reach.hot(<span class="c-s">"discourse"</span>, period=<span class="c-s">"weekly
     <p class="lede">
       Missing tools do not raise opaque errors. Every <code>ReachError</code> subclass
       carries a <code>.fix</code> — a runnable prescription — and where a fallback
-      exists, bharatnet degrades to it instead of failing.
+      exists, agentknows degrades to it instead of failing.
     </p>
     <pre class="block"><code><span class="c-k">try</span>:
     reach.search(<span class="c-s">"react hooks"</span>, platform=<span class="c-s">"github"</span>)
@@ -133,7 +133,7 @@ reach.hot(<span class="c-s">"discourse"</span>, period=<span class="c-s">"weekly
     <span class="c-c">#  brew install gh && gh auth login</span>
     print(e.fix)</code></pre>
     <p class="lede">
-      <code>bharatnet doctor</code> returns the same information as a structured health
+      <code>agentknows doctor</code> returns the same information as a structured health
       report across every channel at once.
     </p>
   </div>
@@ -147,11 +147,11 @@ reach.hot(<span class="c-s">"discourse"</span>, period=<span class="c-s">"weekly
     logged-in sessions.</p>
   </div>
   <figure class="console-shot">
-    <img src="console.jpg" alt="bharatnet console — a research query fanning out across web, news, discourse and youtube, with the merged bundle below" loading="lazy" width="1400" height="770">
+    <img src="console.jpg" alt="agentknows console — a research query fanning out across web, news, discourse and youtube, with the merged bundle below" loading="lazy" width="1400" height="770">
   </figure>
   <pre class="block console-cmd"><code><span class="c-c"># two commands, then it opens itself</span>
-uv pip install <span class="c-s">"bharatnet[ui]"</span>
-bharatnet ui</code></pre>
+uv pip install <span class="c-s">"agentknows[ui]"</span>
+agentknows ui</code></pre>
 </section>
 
 <section class="section" id="coverage">
@@ -189,7 +189,7 @@ bharatnet ui</code></pre>
     <div>
       <h3>SDK &amp; CLI</h3>
       <pre class="block"><code>uv venv &amp;&amp; uv pip install -e .
-bharatnet doctor</code></pre>
+agentknows doctor</code></pre>
       <p class="note">
         <code>doctor</code> reports which upstream tools are missing and how to fix each
         one. Optional: <code>gh</code>, <code>mcporter</code> + <code>exa</code>,
@@ -200,8 +200,8 @@ bharatnet doctor</code></pre>
       <h3>MCP server</h3>
       <pre class="block"><code>{
   <span class="c-s">"mcpServers"</span>: {
-    <span class="c-s">"bharatnet"</span>: {
-      <span class="c-s">"command"</span>: <span class="c-s">"bharatnet-mcp"</span>
+    <span class="c-s">"agentknows"</span>: {
+      <span class="c-s">"command"</span>: <span class="c-s">"agentknows-mcp"</span>
     }
   }
 }</code></pre>
@@ -214,8 +214,8 @@ bharatnet doctor</code></pre>
 </section>
 
 <footer class="footer">
-  <span>bharatnet</span>
-  <span><a href="https://github.com/atharvad999/bharatnet">github.com/atharvad999/bharatnet</a></span>
+  <span>agentknows</span>
+  <span><a href="https://github.com/atharvad999/agentknows">github.com/atharvad999/agentknows</a></span>
 </footer>
 
 <script src="dither.js" defer></script>

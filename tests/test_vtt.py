@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from bharatnet.adapters.youtube import parse_vtt
+from agentknows.adapters.youtube import parse_vtt
 
 SAMPLE = """WEBVTT
 Kind: captions

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from bharatnet.models import Item, ReachResult
-from bharatnet.research import _region_sources, bundle_to_markdown
+from agentknows.models import Item, ReachResult
+from agentknows.research import _region_sources, bundle_to_markdown
 
 
 def _ok(platform, items):

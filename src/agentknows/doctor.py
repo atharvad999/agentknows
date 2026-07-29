@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structured health report: agent-reach channel probes + bharatnet-native channels."""
+"""Structured health report: agent-reach channel probes + agentknows-native channels."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ _TIER_LABELS = {0: "zero-config", 1: "free-key", 2: "login-required"}
 
 
 def _native_checks() -> list[dict[str, Any]]:
-    """Probes for platforms bharatnet adds on top of agent-reach."""
+    """Probes for platforms agentknows adds on top of agent-reach."""
     rows: list[dict[str, Any]] = []
 
     try:
@@ -60,7 +60,7 @@ def doctor(config: Any = None) -> ReachResult:
     return ReachResult(
         ok=True,
         platform="*",
-        backend="bharatnet",
+        backend="agentknows",
         kind="status",
         meta={
             "channels": report,

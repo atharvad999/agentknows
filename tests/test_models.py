@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 
-from bharatnet.models import Item, ReachResult
+from agentknows.models import Item, ReachResult
 
 
 def test_to_dict_drops_empties():

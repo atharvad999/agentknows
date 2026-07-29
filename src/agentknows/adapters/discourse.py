@@ -23,7 +23,7 @@ DEFAULT_FORUM = "https://forum.valuepickr.com"
 KNOWN_HOSTS = ("forum.valuepickr.com",)
 
 _TOPIC_RE = re.compile(r"(https?://[^/]+)/t/(?:[^/]+/)?(\d+)")
-_UA = "bharatnet/0.1 (+https://github.com/Panniantong/Agent-Reach)"
+_UA = "agentknows/0.1 (+https://github.com/Panniantong/Agent-Reach)"
 _MAX_POSTS = 30
 
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Reach — the single facade over all platforms.
 
-    from bharatnet import Reach
+    from agentknows import Reach
 
     reach = Reach()
     reach.read("https://youtube.com/watch?v=...")   # transcript + metadata

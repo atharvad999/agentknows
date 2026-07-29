@@ -4,7 +4,7 @@ import pytest
 fastapi = pytest.importorskip("fastapi")
 from fastapi.testclient import TestClient  # noqa: E402
 
-from bharatnet.webapp import create_app  # noqa: E402
+from agentknows.webapp import create_app  # noqa: E402
 
 
 @pytest.fixture(scope="module")
@@ -15,7 +15,7 @@ def client():
 def test_index_serves_html(client):
     resp = client.get("/")
     assert resp.status_code == 200
-    assert "bharatnet console" in resp.text
+    assert "agentknows console" in resp.text
 
 
 def test_static_assets(client):

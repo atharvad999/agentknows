@@ -1,4 +1,4 @@
-# bharatnet landing page
+# agentknows landing page
 
 Static page — no build step, no dependencies, no external requests. Serve the
 directory and it works:

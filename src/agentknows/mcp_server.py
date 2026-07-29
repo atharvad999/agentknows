@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-"""MCP server exposing bharatnet to any MCP client (Claude Desktop, Cursor, ...).
+"""MCP server exposing agentknows to any MCP client (Claude Desktop, Cursor, ...).
 
-Run:  bharatnet-mcp          (stdio transport)
+Run:  agentknows-mcp          (stdio transport)
 
 Claude Desktop config:
-    {"mcpServers": {"bharatnet": {"command": "bharatnet-mcp"}}}
+    {"mcpServers": {"agentknows": {"command": "agentknows-mcp"}}}
 """
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ from .errors import ReachError
 from .models import ReachResult
 
 mcp = FastMCP(
-    "bharatnet",
+    "agentknows",
     instructions=(
         "Unified internet access across Western + Indian platforms: web, YouTube, "
         "GitHub, RSS, Twitter/X, Hacker News, Reddit, NSE/BSE/US stocks, Indian + "

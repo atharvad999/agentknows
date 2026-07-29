@@ -3,7 +3,7 @@
 otherwise a SetupRequired carrying agent-reach's prescription.
 
 Covers: reddit, facebook, instagram. These platforms only work through a
-real desktop browser session (OpenCLI) or a manual cookie export — bharatnet
+real desktop browser session (OpenCLI) or a manual cookie export — agentknows
 never automates login or reads browser cookies itself.
 """
 

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Unified result shapes returned by every bharatnet adapter.
+"""Unified result shapes returned by every agentknows adapter.
 
 Agent-Reach routes each platform to a different upstream tool with a
-different output format; bharatnet normalizes all of them into ReachResult
+different output format; agentknows normalizes all of them into ReachResult
 so callers (SDK users, MCP clients) parse exactly one shape.
 """
 

@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-"""bharatnet CLI — human-friendly front door to the SDK.
+"""agentknows CLI — human-friendly front door to the SDK.
 
-    bharatnet read <url>
-    bharatnet search "query" [-p youtube] [-n 10]
-    bharatnet hot hackernews
-    bharatnet hot news --region india
-    bharatnet doctor
-    bharatnet platforms
-    bharatnet serve            # start the MCP server (stdio)
+    agentknows read <url>
+    agentknows search "query" [-p youtube] [-n 10]
+    agentknows hot hackernews
+    agentknows hot news --region india
+    agentknows doctor
+    agentknows platforms
+    agentknows serve            # start the MCP server (stdio)
 
 Add --json anywhere for machine output.
 """
@@ -55,7 +55,7 @@ def _print(result: ReachResult, as_json: bool) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="bharatnet", description=__doc__)
+    parser = argparse.ArgumentParser(prog="agentknows", description=__doc__)
     common = argparse.ArgumentParser(add_help=False)
     common.add_argument("--json", action="store_true", help="JSON output")
     sub = parser.add_subparsers(dest="command", required=True)

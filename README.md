@@ -1,4 +1,4 @@
-# bharatnet
+# agentknows
 
 **Typed Python SDK + MCP server for internet access across Western + Indian platforms.**
 Built on [Agent-Reach](https://github.com/Panniantong/Agent-Reach)'s capability layer.
@@ -6,10 +6,10 @@ Built on [Agent-Reach](https://github.com/Panniantong/Agent-Reach)'s capability 
 Agent-Reach is a *capability layer*: it installs, health-checks, and routes the
 best current backend per platform (Jina Reader, yt-dlp, gh, Exa, twitter-cli,
 OpenCLI, ...). By design it has **no programmatic API** — it expects an agent
-with shell access reading `SKILL.md`. bharatnet fills that gap and retargets the
+with shell access reading `SKILL.md`. agentknows fills that gap and retargets the
 platform set at the **English-speaking + Indian internet**:
 
-| Agent-Reach gives you | bharatnet adds |
+| Agent-Reach gives you | agentknows adds |
 |---|---|
 | Installer + doctor + backend routing | One typed facade: `Reach().read(url)` / `.search(q, platform=...)` |
 | Per-platform CLIs, each with its own output format | One `ReachResult` JSON shape for everything |
@@ -23,13 +23,13 @@ platform set at the **English-speaking + Indian internet**:
 ```bash
 uv venv && uv pip install -e .
 # optional upstream tools: gh (GitHub), mcporter+exa (web search), twitter-cli, OpenCLI
-# `bharatnet doctor` tells you exactly what's missing and how to fix it.
+# `agentknows doctor` tells you exactly what's missing and how to fix it.
 ```
 
 ## SDK
 
 ```python
-from bharatnet import Reach
+from agentknows import Reach
 
 reach = Reach()
 
@@ -72,29 +72,29 @@ Failures raise `ReachError` subclasses (`SetupRequired`, `UpstreamFailure`,
 ## CLI
 
 ```bash
-bharatnet read https://news.ycombinator.com/item?id=39000000
-bharatnet read RELIANCE -p stocks
-bharatnet search "vector databases" -n 5
-bharatnet search "Tata Motors" -p discourse
-bharatnet hot news --region india
-bharatnet hot hackernews
-bharatnet research "ONDC adoption" --region india        # merged research bundle
-bharatnet research "rust web frameworks" --report        # + Claude synthesis (needs key)
-bharatnet doctor
-bharatnet read <url> --json        # machine output
+agentknows read https://news.ycombinator.com/item?id=39000000
+agentknows read RELIANCE -p stocks
+agentknows search "vector databases" -n 5
+agentknows search "Tata Motors" -p discourse
+agentknows hot news --region india
+agentknows hot hackernews
+agentknows research "ONDC adoption" --region india        # merged research bundle
+agentknows research "rust web frameworks" --report        # + Claude synthesis (needs key)
+agentknows doctor
+agentknows read <url> --json        # machine output
 ```
 
 `research` fans one query out in parallel across web (Exa), Hacker News, news,
 YouTube, ValuePickr, and Twitter/Reddit when configured, and merges everything
 into one Markdown bundle with per-source coverage notes. `--report` adds a
-Claude-written synthesis (install `bharatnet[research]`, set `ANTHROPIC_API_KEY`
+Claude-written synthesis (install `agentknows[research]`, set `ANTHROPIC_API_KEY`
 or `ant auth login`; refusal fallbacks are enabled by default).
 
 ## Web console
 
 ```bash
-uv pip install "bharatnet[ui]"
-bharatnet ui          # opens http://127.0.0.1:8787
+uv pip install "agentknows[ui]"
+agentknows ui          # opens http://127.0.0.1:8787
 ```
 
 A local one-page console over the same engine: pick a verb (research / search /
@@ -106,13 +106,13 @@ machine, so the console runs next to them.
 ## MCP server
 
 ```bash
-bharatnet-mcp     # stdio
+agentknows-mcp     # stdio
 ```
 
 Claude Desktop / Cursor config:
 
 ```json
-{"mcpServers": {"bharatnet": {"command": "bharatnet-mcp"}}}
+{"mcpServers": {"agentknows": {"command": "agentknows-mcp"}}}
 ```
 
 Tools: `reach_read`, `reach_search`, `reach_hot`, `reach_research`, `reach_doctor`, `reach_platforms`. (`reach_research` returns the raw bundle — the calling model does its own synthesis.)
@@ -140,14 +140,14 @@ News pack sources — India: Economic Times, LiveMint, The Hindu, Times of India
 Moneycontrol. Western: BBC, The Guardian, TechCrunch, The Verge, Ars Technica.
 Edit `adapters/news.py:FEEDS` to customize.
 
-Login-gated platforms follow Agent-Reach's boundaries: bharatnet never automates
+Login-gated platforms follow Agent-Reach's boundaries: agentknows never automates
 logins or reads browser cookies; credentials are injected into child processes
 only and never logged. Use burner accounts — cookie-based API access risks bans.
 
 ## Layout
 
 ```
-src/bharatnet/
+src/agentknows/
 ├── client.py        # Reach facade
 ├── router.py        # URL → platform (native hosts + agent-reach's can_handle)
 ├── doctor.py        # structured health report

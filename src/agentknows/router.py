@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """URL → platform resolution.
 
-bharatnet-native platforms (Hacker News, Discourse forums) are matched first;
+agentknows-native platforms (Hacker News, Discourse forums) are matched first;
 then agent-reach's channel registry handles its platforms (`can_handle`).
 Chinese channels are excluded — their URLs fall through to 'web' (Jina Reader
 reads anything). Registry order matters: RSS heuristics before the catch-all.
@@ -15,7 +15,7 @@ from agent_reach.channels import ALL_CHANNELS
 
 from .adapters.discourse import KNOWN_HOSTS as _DISCOURSE_HOSTS
 
-#: agent-reach channels outside bharatnet's Western+Indian scope.
+#: agent-reach channels outside agentknows's Western+Indian scope.
 EXCLUDED_CHANNELS = {"bilibili", "xiaohongshu", "v2ex", "xueqiu", "xiaoyuzhou"}
 
 _NATIVE_HOSTS = {

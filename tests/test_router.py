@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from bharatnet.router import known_platforms, resolve_platform
+from agentknows.router import known_platforms, resolve_platform
 
 
 def test_youtube():

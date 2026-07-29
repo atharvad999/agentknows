@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""bharatnet — typed SDK + MCP server over Agent-Reach's internet capability layer."""
+"""agentknows — typed SDK + MCP server over Agent-Reach's internet capability layer."""
 
 from .client import Reach
 from .errors import ReachError, SetupRequired, UnsupportedOperation, UpstreamFailure

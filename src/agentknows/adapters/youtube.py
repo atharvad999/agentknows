@@ -81,7 +81,7 @@ class YouTubeAdapter(Adapter):
         )
 
     def _fetch_transcript(self, url: str) -> str:
-        with tempfile.TemporaryDirectory(prefix="bharatnet-yt-") as tmp:
+        with tempfile.TemporaryDirectory(prefix="agentknows-yt-") as tmp:
             try:
                 run(
                     [

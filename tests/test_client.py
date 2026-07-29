@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from bharatnet.adapters.base import Adapter
-from bharatnet.client import Reach
-from bharatnet.errors import SetupRequired, UnsupportedOperation
-from bharatnet.models import ReachResult
+from agentknows.adapters.base import Adapter
+from agentknows.client import Reach
+from agentknows.errors import SetupRequired, UnsupportedOperation
+from agentknows.models import ReachResult
 
 
 def make_reach(**kwargs):

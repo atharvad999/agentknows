@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Local web console for bharatnet — FastAPI + static single page.
+"""Local web console for agentknows — FastAPI + static single page.
 
-Run: `bharatnet ui` (opens http://127.0.0.1:8787). Local-first by design:
+Run: `agentknows ui` (opens http://127.0.0.1:8787). Local-first by design:
 the strongest backends (yt-dlp, gh CLI, cookies, OpenCLI) live on this
 machine, so the console runs next to them rather than on a server.
 """
@@ -34,10 +34,10 @@ def create_app():
     except ImportError as exc:  # pragma: no cover
         raise ReachError(
             "The web console needs fastapi + uvicorn.",
-            fix='uv pip install "bharatnet[ui]"',
+            fix='uv pip install "agentknows[ui]"',
         ) from exc
 
-    app = FastAPI(title="bharatnet console")
+    app = FastAPI(title="agentknows console")
     reach = Reach()
 
     @app.get("/")
@@ -121,5 +121,5 @@ def main(port: int = 8787, open_browser: bool = True) -> None:
     url = f"http://127.0.0.1:{port}"
     if open_browser:
         threading.Timer(0.8, lambda: webbrowser.open(url)).start()
-    print(f"bharatnet console → {url}")
+    print(f"agentknows console → {url}")
     uvicorn.run(app, host="127.0.0.1", port=port, log_level="warning")

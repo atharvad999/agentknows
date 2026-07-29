@@ -151,7 +151,7 @@ def synthesize(query: str, bundle_md: str, *, region: str | None = None) -> str:
         raise SetupRequired(
             "Report synthesis needs the anthropic SDK.",
             platform="research",
-            fix='uv pip install "bharatnet[research]"   # or: pip install anthropic',
+            fix='uv pip install "agentknows[research]"   # or: pip install anthropic',
         ) from exc
 
     region_note = f" The user cares about the {region} internet's perspective." if region else ""
