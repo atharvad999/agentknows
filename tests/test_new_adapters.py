@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from reachkit.adapters.discourse import _TOPIC_RE, DEFAULT_FORUM
-from reachkit.adapters.discourse import _strip_html as strip_discourse
-from reachkit.adapters.hackernews import _ID_RE
-from reachkit.adapters.hackernews import _strip_html as strip_hn
-from reachkit.adapters.news import FEEDS, _region_feeds
-from reachkit.errors import UpstreamFailure
+from bharatnet.adapters.discourse import _TOPIC_RE, DEFAULT_FORUM
+from bharatnet.adapters.discourse import _strip_html as strip_discourse
+from bharatnet.adapters.hackernews import _ID_RE
+from bharatnet.adapters.hackernews import _strip_html as strip_hn
+from bharatnet.adapters.news import FEEDS, _region_feeds
+from bharatnet.errors import UpstreamFailure
 
 
 def test_hn_id_extraction():
@@ -41,7 +41,7 @@ def test_news_regions():
 def test_stocks_missing_dep_message():
     # yfinance installed in this env → adapter importable; just ensure the
     # symbol-parse failure path raises a ReachError with a fix.
-    from reachkit.adapters.hackernews import HackerNewsAdapter
+    from bharatnet.adapters.hackernews import HackerNewsAdapter
 
     with pytest.raises(UpstreamFailure):
         HackerNewsAdapter().read("not-a-number")

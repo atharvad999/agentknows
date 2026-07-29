@@ -1,5 +1,5 @@
 [project]
-name = "reachkit"
+name = "bharatnet"
 version = "0.1.0"
 description = "Typed Python SDK + MCP server wrapping Agent-Reach: one facade to read/search 15 internet platforms."
 readme = "README.md"
@@ -20,8 +20,8 @@ research = ["anthropic>=0.60"]
 dev = ["pytest>=8.0", "ruff>=0.8"]
 
 [project.scripts]
-reachkit = "reachkit.cli:main"
-reachkit-mcp = "reachkit.mcp_server:main"
+bharatnet = "bharatnet.cli:main"
+bharatnet-mcp = "bharatnet.mcp_server:main"
 
 [build-system]
 requires = ["hatchling"]
@@ -31,7 +31,7 @@ build-backend = "hatchling.build"
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/reachkit"]
+packages = ["src/bharatnet"]
 
 [tool.ruff]
 target-version = "py310"

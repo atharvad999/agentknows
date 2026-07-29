@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from reachkit.adapters.base import Adapter
-from reachkit.client import Reach
-from reachkit.errors import SetupRequired, UnsupportedOperation
-from reachkit.models import ReachResult
+from bharatnet.adapters.base import Adapter
+from bharatnet.client import Reach
+from bharatnet.errors import SetupRequired, UnsupportedOperation
+from bharatnet.models import ReachResult
 
 
 def make_reach(**kwargs):

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from reachkit.models import Item, ReachResult
-from reachkit.research import _region_sources, bundle_to_markdown
+from bharatnet.models import Item, ReachResult
+from bharatnet.research import _region_sources, bundle_to_markdown
 
 
 def _ok(platform, items):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 
-from reachkit.models import Item, ReachResult
+from bharatnet.models import Item, ReachResult
 
 
 def test_to_dict_drops_empties():

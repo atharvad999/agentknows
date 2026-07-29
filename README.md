@@ -1,4 +1,4 @@
-# reachkit
+# bharatnet
 
 **Typed Python SDK + MCP server for internet access across Western + Indian platforms.**
 Built on [Agent-Reach](https://github.com/Panniantong/Agent-Reach)'s capability layer.
@@ -6,10 +6,10 @@ Built on [Agent-Reach](https://github.com/Panniantong/Agent-Reach)'s capability 
 Agent-Reach is a *capability layer*: it installs, health-checks, and routes the
 best current backend per platform (Jina Reader, yt-dlp, gh, Exa, twitter-cli,
 OpenCLI, ...). By design it has **no programmatic API** — it expects an agent
-with shell access reading `SKILL.md`. reachkit fills that gap and retargets the
+with shell access reading `SKILL.md`. bharatnet fills that gap and retargets the
 platform set at the **English-speaking + Indian internet**:
 
-| Agent-Reach gives you | reachkit adds |
+| Agent-Reach gives you | bharatnet adds |
 |---|---|
 | Installer + doctor + backend routing | One typed facade: `Reach().read(url)` / `.search(q, platform=...)` |
 | Per-platform CLIs, each with its own output format | One `ReachResult` JSON shape for everything |
@@ -23,13 +23,13 @@ platform set at the **English-speaking + Indian internet**:
 ```bash
 uv venv && uv pip install -e .
 # optional upstream tools: gh (GitHub), mcporter+exa (web search), twitter-cli, OpenCLI
-# `reachkit doctor` tells you exactly what's missing and how to fix it.
+# `bharatnet doctor` tells you exactly what's missing and how to fix it.
 ```
 
 ## SDK
 
 ```python
-from reachkit import Reach
+from bharatnet import Reach
 
 reach = Reach()
 
@@ -72,34 +72,34 @@ Failures raise `ReachError` subclasses (`SetupRequired`, `UpstreamFailure`,
 ## CLI
 
 ```bash
-reachkit read https://news.ycombinator.com/item?id=39000000
-reachkit read RELIANCE -p stocks
-reachkit search "vector databases" -n 5
-reachkit search "Tata Motors" -p discourse
-reachkit hot news --region india
-reachkit hot hackernews
-reachkit research "ONDC adoption" --region india        # merged research bundle
-reachkit research "rust web frameworks" --report        # + Claude synthesis (needs key)
-reachkit doctor
-reachkit read <url> --json        # machine output
+bharatnet read https://news.ycombinator.com/item?id=39000000
+bharatnet read RELIANCE -p stocks
+bharatnet search "vector databases" -n 5
+bharatnet search "Tata Motors" -p discourse
+bharatnet hot news --region india
+bharatnet hot hackernews
+bharatnet research "ONDC adoption" --region india        # merged research bundle
+bharatnet research "rust web frameworks" --report        # + Claude synthesis (needs key)
+bharatnet doctor
+bharatnet read <url> --json        # machine output
 ```
 
 `research` fans one query out in parallel across web (Exa), Hacker News, news,
 YouTube, ValuePickr, and Twitter/Reddit when configured, and merges everything
 into one Markdown bundle with per-source coverage notes. `--report` adds a
-Claude-written synthesis (install `reachkit[research]`, set `ANTHROPIC_API_KEY`
+Claude-written synthesis (install `bharatnet[research]`, set `ANTHROPIC_API_KEY`
 or `ant auth login`; refusal fallbacks are enabled by default).
 
 ## MCP server
 
 ```bash
-reachkit-mcp     # stdio
+bharatnet-mcp     # stdio
 ```
 
 Claude Desktop / Cursor config:
 
 ```json
-{"mcpServers": {"reachkit": {"command": "reachkit-mcp"}}}
+{"mcpServers": {"bharatnet": {"command": "bharatnet-mcp"}}}
 ```
 
 Tools: `reach_read`, `reach_search`, `reach_hot`, `reach_research`, `reach_doctor`, `reach_platforms`. (`reach_research` returns the raw bundle — the calling model does its own synthesis.)
@@ -127,14 +127,14 @@ News pack sources — India: Economic Times, LiveMint, The Hindu, Times of India
 Moneycontrol. Western: BBC, The Guardian, TechCrunch, The Verge, Ars Technica.
 Edit `adapters/news.py:FEEDS` to customize.
 
-Login-gated platforms follow Agent-Reach's boundaries: reachkit never automates
+Login-gated platforms follow Agent-Reach's boundaries: bharatnet never automates
 logins or reads browser cookies; credentials are injected into child processes
 only and never logged. Use burner accounts — cookie-based API access risks bans.
 
 ## Layout
 
 ```
-src/reachkit/
+src/bharatnet/
 ├── client.py        # Reach facade
 ├── router.py        # URL → platform (native hosts + agent-reach's can_handle)
 ├── doctor.py        # structured health report
